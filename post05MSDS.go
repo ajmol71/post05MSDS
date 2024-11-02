@@ -53,7 +53,7 @@ func exists(username string) string {
 	defer db.Close()
 
 	courseID := "-1"
-	statement := fmt.Sprintf(`SELECT "cid" FROM "MSDSCourseCatalog" where cid = '%s'`, username)
+	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cid = '%s'`, username)
 	rows, err := db.Query(statement)
 
 	for rows.Next() {
@@ -88,7 +88,7 @@ func AddCourse(d MSDSCourse) string {
 		return "-1"
 	}
 
-	insertStatement := `insert into "MSDSCourseCatalog" ("CID") values ($1)`
+	insertStatement := `insert into "msdscoursecatalog" ("cid") values ($1)`
 	_, err = db.Exec(insertStatement, d.CID)
 	if err != nil {
 		fmt.Println(err)
@@ -100,7 +100,7 @@ func AddCourse(d MSDSCourse) string {
 		return courseID
 	}
 
-	insertStatement = `insert into "MSDSCourseCatalog" ("CID", "CNAME", "CPREREQ")
+	insertStatement = `insert into "msdscoursecatalog" ("cid", "cname", "cprereq")
 	values ($1, $2, $3)`
 	_, err = db.Exec(insertStatement, courseID, d.CNAME, d.CPREREQ)
 	if err != nil {
@@ -120,7 +120,7 @@ func DeleteCourse(id string) error {
 	defer db.Close()
 
 	// Does the ID exist?
-	statement := fmt.Sprintf(`SELECT "cid" FROM "MSDSCourseCatalog" where cid = %d`, id)
+	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cid = %d`, id)
 	rows, err := db.Query(statement)
 
 	var cid string
@@ -144,7 +144,7 @@ func DeleteCourse(id string) error {
 	// }
 
 	// Delete from catalog
-	deleteStatement := `delete from "MSDSCourseCatalog" where id=$1`
+	deleteStatement := `DELETE FROM "msdscoursecatalog" WHERE id=$1`
 	_, err = db.Exec(deleteStatement, id)
 	if err != nil {
 		return err
@@ -163,7 +163,7 @@ func ListCourses() ([]MSDSCourse, error) {
 	defer db.Close()
 
 	rows, err := db.Query(`SELECT "cid","cname","cprereq",
-		FROM "MSDSCourseCatalog"`)
+		FROM "msdscoursecatalog"`)
 	if err != nil {
 		return Data, err
 	}
@@ -196,7 +196,7 @@ func UpdateCourse(d MSDSCourse) error {
 		return errors.New("Course does not exist")
 	}
 	d.CID = courseID
-	updateStatement := `update "MSDSCourseCatalog" set "cname"=$1, "cprereq"=$2, where "cid"=$3`
+	updateStatement := `update "msdscoursecatalog" set "cname"=$1, "cprereq"=$2, where "cid"=$3`
 	_, err = db.Exec(updateStatement, d.CNAME, d.CPREREQ, d.CID)
 	if err != nil {
 		return err
