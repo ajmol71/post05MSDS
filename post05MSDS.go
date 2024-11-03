@@ -120,7 +120,7 @@ func DeleteCourse(id string) error {
 	defer db.Close()
 
 	// Does the ID exist?
-	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cid = %d`, id)
+	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" WHERE cid = %d`, id)
 	rows, err := db.Query(statement)
 
 	var cid string
@@ -162,8 +162,7 @@ func ListCourses() ([]MSDSCourse, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT "cid","cname","cprereq",
-		FROM "msdscoursecatalog"`)
+	rows, err := db.Query(`SELECT "cid","cname","cprereq" FROM "msdscoursecatalog"`)
 	if err != nil {
 		return Data, err
 	}
