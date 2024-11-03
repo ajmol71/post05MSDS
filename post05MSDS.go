@@ -23,8 +23,8 @@ var (
 // Course Structure
 type MSDSCourse struct {
 	CID         string
-	CNAME   	string
-	CPREREQ     string
+	CNAME	    *string
+	CPREREQ     *string
 }
 
 func openConnection() (*sql.DB, error) {
