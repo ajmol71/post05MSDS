@@ -73,8 +73,6 @@ func exists(username string) string {
 // Returns new course ID
 // -1 if there was an error
 func AddCourse(d MSDSCourse) string {
-	d.CID = strings.ToLower(d.CID)
-
 	db, err := openConnection()
 	if err != nil {
 		fmt.Println(err)
@@ -144,7 +142,7 @@ func DeleteCourse(id string) error {
 	// }
 
 	// Delete from catalog
-	deleteStatement := `DELETE FROM "msdscoursecatalog" WHERE id=$1`
+	deleteStatement := `DELETE FROM "msdscoursecatalog" WHERE cid = $1`
 	_, err = db.Exec(deleteStatement, id)
 	if err != nil {
 		return err
@@ -182,7 +180,7 @@ func ListCourses() ([]MSDSCourse, error) {
 	return Data, nil
 }
 
-// UpdateUser is for updating an existing user
+// UpdateCourse is for updating an existing course
 func UpdateCourse(d MSDSCourse) error {
 	db, err := openConnection()
 	if err != nil {
