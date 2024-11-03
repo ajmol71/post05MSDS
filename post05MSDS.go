@@ -160,7 +160,7 @@ func ListCourses() ([]MSDSCourse, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT "cid","cname","cprereq" FROM "msdscoursecatalog"`)
+	rows, err := db.Query(`SELECT "cid", IFNULL(cname, ""), IFNULL(cprereq, "") FROM "msdscoursecatalog"`)
 	if err != nil {
 		return Data, err
 	}
@@ -169,7 +169,7 @@ func ListCourses() ([]MSDSCourse, error) {
 		var cid string
 		var cname string
 		var cprereq string
-		err = rows.Scan(&cid, IFNULL(&cname, ""), IFNULL(&cprereq, ""))
+		err = rows.Scan(&cid, &cname, &cprereq)
 		temp := MSDSCourse{CID: cid, CNAME: cname, CPREREQ: cprereq}
 		Data = append(Data, temp)
 		if err != nil {
