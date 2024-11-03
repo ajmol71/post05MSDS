@@ -23,8 +23,8 @@ var (
 // Course Structure
 type MSDSCourse struct {
 	CID         string
-	CNAME	    *string
-	CPREREQ     *string
+	CNAME	    string
+	CPREREQ     string
 }
 
 func openConnection() (*sql.DB, error) {
@@ -169,7 +169,7 @@ func ListCourses() ([]MSDSCourse, error) {
 		var cid string
 		var cname string
 		var cprereq string
-		err = rows.Scan(&cid, &cname, &cprereq)
+		err = rows.Scan(&cid, IFNULL(&cname, ""), IFNULL(&cprereq, ""))
 		temp := MSDSCourse{CID: cid, CNAME: cname, CPREREQ: cprereq}
 		Data = append(Data, temp)
 		if err != nil {
