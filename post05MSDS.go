@@ -118,7 +118,7 @@ func DeleteCourse(id string) error {
 	defer db.Close()
 
 	// Does the ID exist?
-	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" WHERE cid = %d`, id)
+	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" WHERE "cid" = %d`, id)
 	rows, err := db.Query(statement)
 
 	var cid string
@@ -142,7 +142,7 @@ func DeleteCourse(id string) error {
 	// }
 
 	// Delete from catalog
-	deleteStatement := `DELETE FROM "msdscoursecatalog" WHERE cid = $1`
+	deleteStatement := `DELETE FROM "msdscoursecatalog" WHERE "cid" = $1`
 	_, err = db.Exec(deleteStatement, id)
 	if err != nil {
 		return err
