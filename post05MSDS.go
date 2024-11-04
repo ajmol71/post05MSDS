@@ -86,20 +86,20 @@ func AddCourse(d MSDSCourse) string {
 		return "-1"
 	}
 
-	insertStatement := `insert into "msdscoursecatalog" ("cid") values ($1)`
-	_, err = db.Exec(insertStatement, d.CID)
-	if err != nil {
-		fmt.Println(err)
-		return "-1"
-	}
+	// insertStatement := `insert into "msdscoursecatalog" ("cid") values ($1)`
+	// _, err = db.Exec(insertStatement, d.CID)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return "-1"
+	// }
 
 	courseID = exists(d.CID)
 	if courseID == "-1" {
 		return courseID
 	}
 
-	insertStatement = `insert into "msdscoursecatalog" ("cid", "cname", "cprereq")
-	values ($1, $2, $3)`
+	insertStatement = `INSERT INTO "msdscoursecatalog" ("cid", "cname", "cprereq")
+	VALUES ($1, $2, $3)`
 	_, err = db.Exec(insertStatement, courseID, d.CNAME, d.CPREREQ)
 	if err != nil {
 		fmt.Println("db.Exec()", err)
