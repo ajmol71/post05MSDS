@@ -98,7 +98,7 @@ func AddCourse(d MSDSCourse) string {
 		return courseID
 	}
 
-	insertStatement = `INSERT INTO "msdscoursecatalog" ("cid", "cname", "cprereq")
+	insertStatement := `INSERT INTO "msdscoursecatalog" ("cid", "cname", "cprereq")
 	VALUES ($1, $2, $3)`
 	_, err = db.Exec(insertStatement, courseID, d.CNAME, d.CPREREQ)
 	if err != nil {
