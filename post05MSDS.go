@@ -170,12 +170,6 @@ func ListCourses() ([]MSDSCourse, error) {
 		var cname string
 		var cprereq string
 		err = rows.Scan(&cid, &cname, &cprereq)
-		if cname == sql.NullString {
-			if cprereq == sql.NullString {
-				fmt.Println("No Courses in Database")
-				return
-			}
-		}
 		temp := MSDSCourse{CID: cid, CNAME: cname, CPREREQ: cprereq}
 		Data = append(Data, temp)
 		if err != nil {
