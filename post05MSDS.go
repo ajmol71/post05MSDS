@@ -166,9 +166,9 @@ func ListCourses() ([]MSDSCourse, error) {
 	}
 
 	for rows.Next() {
-		var cid string
-		var cname string
-		var cprereq string
+		var cid sql.NullString
+		var cname sql.NullString
+		var cprereq sql.NullString
 		err = rows.Scan(&cid, &cname, &cprereq)
 		temp := MSDSCourse{CID: cid, CNAME: cname, CPREREQ: cprereq}
 		Data = append(Data, temp)
